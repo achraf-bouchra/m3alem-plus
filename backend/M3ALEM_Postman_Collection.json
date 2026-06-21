@@ -1,0 +1,450 @@
+{
+  "info": {
+    "name": "M3ALEM Backend API",
+    "description": "Complete API collection for M3ALEM platform testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"client@example.com\",\n  \"password\": \"ClientSecure123!\",\n  \"role\": \"CLIENT\",\n  \"phone\": \"0601020304\",\n  \"profile\": {\n    \"address\": \"123 Rue de Paris\",\n    \"latitude\": 48.8566,\n    \"longitude\": 2.3522\n  }\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/accounts/register/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "accounts", "register", ""]
+            }
+          }
+        },
+        {
+          "name": "Register Artisan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"artisan@example.com\",\n  \"password\": \"ArtisanSecure123!\",\n  \"role\": \"ARTISAN\",\n  \"phone\": \"0709080706\",\n  \"profile\": {\n    \"profession\": \"Plombier\",\n    \"bio\": \"Expert plomberie 5 ans\",\n    \"latitude\": 48.8570,\n    \"longitude\": 2.3520,\n    \"experience_years\": 5\n  }\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/accounts/register/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "accounts", "register", ""]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"client@example.com\",\n  \"password\": \"ClientSecure123!\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/login/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "login", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services & Requests",
+      "item": [
+        {
+          "name": "Get Services",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/services/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "services", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{client_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service\": 1,\n  \"description\": \"Fuite au niveau du lavabo cuisine\",\n  \"address\": \"123 Rue de Paris, 75001 Paris\",\n  \"latitude\": 48.8566,\n  \"longitude\": 2.3522\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/requests/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "requests", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Request Matching",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{client_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/requests/{{request_id}}/matching/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "requests", "{{request_id}}", "matching", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Offers & Acceptance",
+      "item": [
+        {
+          "name": "Create Offer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{artisan_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request\": \"{{request_id}}\",\n  \"price\": 85.50,\n  \"message\": \"Je peux faire ce travail en 2h max\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/requests/offers/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "requests", "offers", ""]
+            }
+          }
+        },
+        {
+          "name": "Accept Offer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{client_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"accept\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/requests/offers/{{offer_id}}/respond/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "requests", "offers", "{{offer_id}}", "respond", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{client_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"offer\": \"{{offer_id}}\",\n  \"method\": \"CARD\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/payments/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "payments", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{client_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request\": \"{{request_id}}\",\n  \"rating\": 5,\n  \"comment\": \"Excellent travail! Artisan très professionnel et rapide. Recommande vivement!\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/reviews/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "reviews", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Suspicious Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{client_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request\": \"{{request_id}}\",\n  \"rating\": 5,\n  \"comment\": \"OMG OMG OMG BEST SERVICE EVER AMAZING INCREDIBLE OMG OMG OMG HIGHLY PAID FAKE REVIEW\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/reviews/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "reviews", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}\n"
+              }
+            ],
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/reviews/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "reviews", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fraud Detection",
+      "item": [
+        {
+          "name": "Test Positive Review (Real)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"This service was absolutely terrible, horrible, disgusting, worst ever!!!\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/fraud/review-fake-check/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "fraud", "review-fake-check", ""]
+            }
+          }
+        },
+        {
+          "name": "Test Fake Review (Suspicious)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"AMAZING!!! INCREDIBLE!!! BEST!!! SUPER GOOD!!! MUST BUY!!! AWESOME!!! PERFECT!!! 100/10!!!\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/fraud/review-fake-check/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "fraud", "review-fake-check", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Get Chat Rooms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/chat/rooms/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "chat", "rooms", ""]
+            }
+          }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"room\": \"{{room_id}}\",\n  \"content\": \"Quand pouvez-vous commencer les travaux?\"\n}"
+            },
+            "url": {
+              "raw": "http://10.89.108.137:8000/api/chat/messages/",
+              "protocol": "http",
+              "host": ["127", "0", "0", "1"],
+              "port": "8000",
+              "path": ["api", "chat", "messages", ""]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "client_access_token",
+      "value": ""
+    },
+    {
+      "key": "artisan_access_token",
+      "value": ""
+    },
+    {
+      "key": "request_id",
+      "value": ""
+    },
+    {
+      "key": "offer_id",
+      "value": ""
+    },
+    {
+      "key": "room_id",
+      "value": ""
+    }
+  ]
+}
